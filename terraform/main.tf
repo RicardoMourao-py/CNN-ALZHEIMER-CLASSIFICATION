@@ -23,6 +23,12 @@ resource "google_cloudfunctions_function" "this" {
     event_type   = var.trigger_type
     resource     = var.trigger_resource
   }
+
+  secret_environment_variables {
+    key = "SENDER_PASSWORD_EMAIL"
+    secret = "SENDER_PASSWORD_EMAIL"
+    version = "latest"
+  }
 }
 
 data "archive_file" "this" {
