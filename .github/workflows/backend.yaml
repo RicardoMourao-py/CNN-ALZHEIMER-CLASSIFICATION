@@ -65,3 +65,4 @@ jobs:
           else
             echo "====== Plan - Destroy ======"
             terraform plan -destroy -var-file="config/backend.tfvars" -out=.terraform_tmp/plan.destroy -no-color
+          fi
