@@ -1,8 +1,5 @@
 terraform {
-  backend "gcs" {
-    bucket = "your-bucket-name"
-    prefix = "terraform-state"
-  }
+  backend "gcs" {}
 
   required_providers {
     archive = {

@@ -1,4 +1,4 @@
-name: Terraform Deployment
+name: Backend Deployment
 
 on:
   workflow_dispatch:
@@ -12,11 +12,6 @@ on:
           - Desenvolvimento
           - Homologação
           - Produção
-      projectName:
-        description: 'Nome da Pasta?'
-        required: true
-        default: 'cf_xxxx'
-        type: string
       destroy:
         description: 'Destruir CF?'
         required: true
@@ -25,7 +20,7 @@ on:
         options:
           - True
           - False
-          
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -47,3 +42,27 @@ jobs:
             echo "Atenção: Produção obrigatoriamente precisa partir da branch main!"
             exit 1
           fi
+      
+      - name: Checkout KEYS GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+      - name: Install Terraform
+        run: |
+          wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update && sudo apt install terraform
+
+      - name: Plan Execution
+        run: |
+          echo "Template: $ENVTRIGGER"
+          cp CNN-ALZHEIMER-CLASSIFICATION/terraform/*.tf CNN-ALZHEIMER-CLASSIFICATION/backend/
+          cd CNN-ALZHEIMER-CLASSIFICATION/backend
+          terraform init -backend-config=config/backend.gcs.tfbackend
+          if [ "${{ github.event.inputs.destroy }}" == "False" ]; then
+            echo "====== Plan - Create ======"
+            terraform plan -var-file="config/${{ env.env_prefix }}.tfvars" -out=.terraform_tmp/plan.create -no-color
+          else
+            echo "====== Plan - Destroy ======"
+            terraform plan -destroy -var-file="config/${{ env.env_prefix }}.tfvars" -out=.terraform_tmp/plan.destroy -no-color
