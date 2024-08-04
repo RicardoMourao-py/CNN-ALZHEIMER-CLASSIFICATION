@@ -69,6 +69,8 @@ jobs:
 
       - name: Apply Execution
         run: |
+          pwd
+          ls -la
           cd ${{ github.workspace }}/backend
           if [ "${{ github.event.inputs.destroy }}" == "false" ]; then
             echo "====== Apply - Create ======"
