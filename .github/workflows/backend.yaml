@@ -1,0 +1,27 @@
+name: Terraform Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Ambiente?'
+        required: true
+        default: 'Desenvolvimento'
+        type: choice
+        options:
+          - Desenvolvimento
+          - Homologação
+          - Produção
+      projectName:
+        description: 'Nome da Pasta?'
+        required: true
+        default: 'cf_xxxx'
+        type: string
+      destroy:
+        description: 'Destruir CF?'
+        required: true
+        default: 'False'
+        type: choice
+        options:
+          - True
+          - False
