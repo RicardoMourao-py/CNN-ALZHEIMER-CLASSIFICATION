@@ -14,6 +14,13 @@ Classificação de imagens médicas de Alzheimer utilizando redes neurais convol
 :four: O Vertex AI possui uma vasta quantidade de ferramentas para treinamento de modelos, *datasets* classificados e *endpoints* de modelos. Com isso, foi criado um *endpoint* que é chamado via código da Cloud Function para realizar a **previsão** da imagem armazenada no Cloud Storage. <br><br>
 :five: Por fim, o resultado é retornado em um json e enviado para o **e-mail destinatário** definido no código. 
 
+<div align="center" style="max-width:28rem;">
+
+
+## ➡️➡️➡️ [Link: Demonstração Aplicação](https://www.youtube.com/watch?v=cUn_86G7TtA) ⬅️⬅️⬅️
+
+</div>
+
 ## Referências
 - https://github.com/DanielOttodev/GoogleStorage-UploadTutorial
   
