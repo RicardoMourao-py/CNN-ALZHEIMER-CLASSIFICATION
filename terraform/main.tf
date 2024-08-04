@@ -28,7 +28,7 @@ resource "google_cloudfunctions_function" "this" {
 data "archive_file" "this" {
   type        = "zip"
   output_path = "${path.module}/.terraform_tmp/${var.function_name}.zip"
-  source_dir  = "${path.module}/../src"
+  source_dir  = "${path.module}/.."
   excludes    = var.excludes
 }
 
