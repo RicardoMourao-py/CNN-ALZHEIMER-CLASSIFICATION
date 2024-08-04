@@ -1,0 +1,57 @@
+name: Frontend Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Ambiente?'
+        required: true
+        default: 'Desenvolvimento'
+        type: choice
+        options:
+          - Desenvolvimento
+          - Homologação
+          - Produção
+      projectName:
+        description: 'Nome do Provider/Projeto?'
+        required: true
+        default: 'bigdata-dados-publicos'
+        type: string
+      serviceName:
+        description: Nome do Serviço?
+        required: true
+        default: 'cr-predict-alzheimer'
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      branch_key: ${{ github.event.inputs.environment == 'Desenvolvimento' && 'develop' || github.event.inputs.environment == 'Homologação' && 'homolog' || github.event.inputs.environment == 'Produção' && 'main' }}
+      env_prefix: ${{ github.event.inputs.environment == 'Desenvolvimento' && 'dev' || github.event.inputs.environment == 'Homologação' && 'hmg' || github.event.inputs.environment == 'Produção' && 'prd' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Verify Environment
+        run: |
+          echo "Projeto: ${{ github.event.inputs.projectName }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Ambiente selecionado: ${{ env.env_prefix }}"
+          if [ "${{ github.event.inputs.environment }}" == "Produção" ] && [ "${{ github.ref }}" != "refs/heads/main" ]; then 
+            echo "Atenção: Produção obrigatoriamente precisa partir da branch main!"
+            exit 1
+          fi
+      
+      - name: Checkout KEYS GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+      - name: 'Deployed Cloud Run'
+        run: |
+          cd ${{ github.workspace }}/frontend
+          pwd
+          ls -la
+          gcloud run deploy ${{parameters.serviceName}} --source . --project ${{parameters.projectName}} --no-allow-unauthenticated --region us-east1 --ingress internal
