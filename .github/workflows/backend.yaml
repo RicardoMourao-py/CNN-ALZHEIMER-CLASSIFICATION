@@ -57,8 +57,8 @@ jobs:
       - name: Plan Execution
         run: |
           echo "Template: $ENVTRIGGER"
-          cp CNN-ALZHEIMER-CLASSIFICATION/terraform/*.tf CNN-ALZHEIMER-CLASSIFICATION/backend/
-          cd CNN-ALZHEIMER-CLASSIFICATION/backend
+          cp RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/terraform/*.tf RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/backend/
+          cd RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/backend
           terraform init -backend-config=config/backend.gcs.tfbackend
           if [ "${{ github.event.inputs.destroy }}" == "False" ]; then
             echo "====== Plan - Create ======"
