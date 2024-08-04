@@ -56,9 +56,8 @@ jobs:
 
       - name: Plan Execution
         run: |
-          pwd
-          cp RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/terraform/*.tf RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/backend/
-          cd RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/backend
+          cp ${{ github.workspace }}/CNN-ALZHEIMER-CLASSIFICATION/terraform/*.tf ${{ github.workspace }}/CNN-ALZHEIMER-CLASSIFICATION/backend/
+          cd ${{ github.workspace }}/CNN-ALZHEIMER-CLASSIFICATION/backend
           terraform init -backend-config=config/backend.gcs.tfbackend
           if [ "${{ github.event.inputs.destroy }}" == "False" ]; then
             echo "====== Plan - Create ======"
