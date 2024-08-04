@@ -56,7 +56,7 @@ jobs:
 
       - name: Plan Execution
         run: |
-          echo "Template: $ENVTRIGGER"
+          pwd
           cp RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/terraform/*.tf RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/backend/
           cd RicardoMourao-py/CNN-ALZHEIMER-CLASSIFICATION/backend
           terraform init -backend-config=config/backend.gcs.tfbackend
