@@ -61,7 +61,7 @@ jobs:
           terraform init -backend-config=config/backend.gcs.tfbackend
           if [ "${{ github.event.inputs.destroy }}" == "False" ]; then
             echo "====== Plan - Create ======"
-            terraform plan -var-file="config/${{ env.env_prefix }}.tfvars" -out=.terraform_tmp/plan.create -no-color
+            terraform plan -var-file="config/backend.tfvars" -out=.terraform_tmp/plan.create -no-color
           else
             echo "====== Plan - Destroy ======"
-            terraform plan -destroy -var-file="config/${{ env.env_prefix }}.tfvars" -out=.terraform_tmp/plan.destroy -no-color
+            terraform plan -destroy -var-file="config/backend.tfvars" -out=.terraform_tmp/plan.destroy -no-color
