@@ -23,7 +23,7 @@ def download_image_from_bucket(bucket_name: str, blob_name: str) -> bytes:
     image_data = blob.download_as_bytes()
     return image_data
 
-def predict_image_classification(event, context):
+def main(event, context):
     """Background Cloud Function to be triggered by Cloud Storage."""
     bucket_name = event['bucket']
     blob_name = event['name']
