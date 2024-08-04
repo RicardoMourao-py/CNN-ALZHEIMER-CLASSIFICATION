@@ -56,8 +56,8 @@ jobs:
 
       - name: Plan Execution
         run: |
-          cp ${{ github.workspace }}/CNN-ALZHEIMER-CLASSIFICATION/terraform/*.tf ${{ github.workspace }}/CNN-ALZHEIMER-CLASSIFICATION/backend/
-          cd ${{ github.workspace }}/CNN-ALZHEIMER-CLASSIFICATION/backend
+          cp ${{ github.workspace }}/terraform/*.tf ${{ github.workspace }}/backend/
+          cd ${{ github.workspace }}/backend
           terraform init -backend-config=config/backend.gcs.tfbackend
           if [ "${{ github.event.inputs.destroy }}" == "False" ]; then
             echo "====== Plan - Create ======"
