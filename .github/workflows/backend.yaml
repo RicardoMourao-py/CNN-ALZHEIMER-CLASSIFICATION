@@ -59,7 +59,7 @@ jobs:
           cp ${{ github.workspace }}/terraform/*.tf ${{ github.workspace }}/backend/
           cd ${{ github.workspace }}/backend
           terraform init -backend-config=config/backend.gcs.tfbackend
-          if [ "${{ github.event.inputs.destroy }}" == "False" ]; then
+          if [ "${{ github.event.inputs.destroy }}" == "false" ]; then
             echo "====== Plan - Create ======"
             terraform plan -var-file="config/backend.tfvars" -out=.terraform_tmp/plan.create -no-color
           else
