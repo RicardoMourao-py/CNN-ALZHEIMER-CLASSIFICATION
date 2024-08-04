@@ -67,13 +67,13 @@ jobs:
             terraform plan -destroy -var-file="config/backend.tfvars" -out=.terraform_tmp/plan.destroy -no-color
           fi
 
-    - name: Apply Execution
-        run: |
-          cd ${{ github.workspace }}/backend
-          if [ "${{ github.event.inputs.destroy }}" == "false" ]; then
-            echo "====== Apply - Create ======"
-            terraform apply .terraform_tmp/plan.create
-          else
-            echo "====== Apply - Destroy ======"
-            terraform apply .terraform_tmp/plan.destroy
-          fi
+      - name: Apply Execution
+          run: |
+            cd ${{ github.workspace }}/backend
+            if [ "${{ github.event.inputs.destroy }}" == "false" ]; then
+              echo "====== Apply - Create ======"
+              terraform apply .terraform_tmp/plan.create
+            else
+              echo "====== Apply - Destroy ======"
+              terraform apply .terraform_tmp/plan.destroy
+            fi
