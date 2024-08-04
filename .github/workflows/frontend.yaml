@@ -54,4 +54,4 @@ jobs:
           cd ${{ github.workspace }}/frontend
           pwd
           ls -la
-          gcloud run deploy ${{parameters.serviceName}} --source . --project ${{parameters.projectName}} --no-allow-unauthenticated --region us-east1 --ingress internal
+          gcloud run deploy ${{ github.event.inputs.serviceName }} --source . --project ${{ github.event.inputs.projectName }} --no-allow-unauthenticated --region us-east1 --ingress internal
