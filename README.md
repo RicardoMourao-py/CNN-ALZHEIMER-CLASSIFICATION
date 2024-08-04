@@ -16,4 +16,5 @@ Classificação de imagens médicas de Alzheimer utilizando redes neurais convol
 
 ## Referências
 - https://github.com/DanielOttodev/GoogleStorage-UploadTutorial
+  
 ©️ Insper, PIBITI 2023/2024
